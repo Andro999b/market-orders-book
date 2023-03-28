@@ -7,13 +7,13 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class PriorityQueueOrderBooks extends OrdersBook {
-  private final Map<Integer, Integer> bids = new HashMap<>(1000000);
-  private final Queue<Integer> bidsOrder = new PriorityQueue<>(1000000, Comparator.reverseOrder());
-  private final Map<Integer, Integer> asks = new HashMap<>(1000000);
-  private final Queue<Integer> asksOrder = new PriorityQueue<>(1000000);
+  private final Map<Integer, Integer> bids = new HashMap<>();
+  private final Queue<Integer> bidsOrder = new PriorityQueue<>(Comparator.reverseOrder());
+  private final Map<Integer, Integer> asks = new HashMap<>();
+  private final Queue<Integer> asksOrder = new PriorityQueue<>();
 
   @Override
-  protected void querySize(StringBuilder output, Integer price) {
+  protected void querySize(StringBuilder output, int price) {
     var size = asks.get(price);
     if (size != null) {
       output.append(size).append(System.lineSeparator());
@@ -41,7 +41,7 @@ public class PriorityQueueOrderBooks extends OrdersBook {
   }
 
   @Override
-  protected void makeOrder(boolean bidsOrAsk, Integer size) {
+  protected void makeOrder(boolean bidsOrAsk, int size) {
     var book = bidsOrAsk ? bids : asks;
     var order = bidsOrAsk ? bidsOrder : asksOrder;
 
@@ -60,7 +60,7 @@ public class PriorityQueueOrderBooks extends OrdersBook {
   }
 
   @Override
-  protected void update(Integer price, Integer size, Boolean bidsOrAsk) {
+  protected void update(int price, int size, boolean bidsOrAsk) {
     var book = bidsOrAsk ? bids : asks;
     var order = bidsOrAsk ? bidsOrder : asksOrder;
 

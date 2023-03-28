@@ -13,7 +13,7 @@ public class TreeSetOrderBooks extends OrdersBook {
   private final SortedSet<Integer> asksOrder = new TreeSet<>();
 
   @Override
-  protected void querySize(StringBuilder output, Integer price) {
+  protected void querySize(StringBuilder output, int price) {
     var size = asks.get(price);
     if (size != null) {
       output.append(size).append(System.lineSeparator());
@@ -41,7 +41,7 @@ public class TreeSetOrderBooks extends OrdersBook {
   }
 
   @Override
-  protected void makeOrder(boolean bidsOrAsk, Integer size) {
+  protected void makeOrder(boolean bidsOrAsk, int size) {
     var book = bidsOrAsk ? bids : asks;
     var order = bidsOrAsk ? bidsOrder : asksOrder;
 
@@ -60,7 +60,7 @@ public class TreeSetOrderBooks extends OrdersBook {
   }
 
   @Override
-  protected void update(Integer price, Integer size, Boolean bidsOrAsk) {
+  protected void update(int price, int size, boolean bidsOrAsk) {
     var book = bidsOrAsk ? bids : asks;
     var order = bidsOrAsk ? bidsOrder : asksOrder;
 

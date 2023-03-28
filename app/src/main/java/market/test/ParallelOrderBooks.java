@@ -17,7 +17,7 @@ public class ParallelOrderBooks extends OrdersBook {
   private final ExecutorService askExecutor = Executors.newFixedThreadPool(1);
 
   @Override
-  protected void querySize(StringBuilder output, Integer price) {
+  protected void querySize(StringBuilder output, int price) {
     asksPhaser.arriveAndAwaitAdvance();
     bidsPhaser.arriveAndAwaitAdvance();
     var size = asks.get(price);
@@ -47,7 +47,7 @@ public class ParallelOrderBooks extends OrdersBook {
   }
 
   @Override
-  protected void update(Integer price, Integer size, Boolean bidsOrAsk) {
+  protected void update(int price, int size, boolean bidsOrAsk) {
     var phaser = bidsOrAsk ? bidsPhaser : asksPhaser;
     var executor = bidsOrAsk ? bidsExecutor : askExecutor;
     var book = bidsOrAsk ? bids : asks;
@@ -64,7 +64,7 @@ public class ParallelOrderBooks extends OrdersBook {
   }
 
   @Override
-  protected void makeOrder(boolean bidsOrAsk, Integer size) {
+  protected void makeOrder(boolean bidsOrAsk, int size) {
     var phaser = bidsOrAsk ? bidsPhaser : asksPhaser;
     var executor = bidsOrAsk ? bidsExecutor : askExecutor;
     var book = bidsOrAsk ? bids : asks;
