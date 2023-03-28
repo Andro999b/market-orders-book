@@ -7,6 +7,7 @@ import java.nio.file.Path;
 
 public abstract class OrdersBook {
   public final void process(String inputFile, String outputFile) throws Exception {
+    startup();
     var output = new StringBuilder();
 
     try (var input = new BufferedReader(new FileReader(inputFile))) {
@@ -28,9 +29,11 @@ public abstract class OrdersBook {
           }
           case 'o' -> makeOrder(
               line.charAt(2) == 's',
-              Integer.parseInt(Integer.parseInt(line.substring(line.lastIndexOf(',') + 1))));
+              Integer.parseInt(line.substring(line.lastIndexOf(',') + 1)));
         }
       });
+    } finally {
+      shutdown();
     }
 
     Files.writeString(Path.of(outputFile), output.toString());
@@ -44,4 +47,6 @@ public abstract class OrdersBook {
 
   protected abstract void update(Integer price, Integer size, Boolean bidsOrAsk);
 
+  protected void shutdown() {}
+  protected void startup() {}
 }

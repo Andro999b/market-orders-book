@@ -13,7 +13,7 @@ public class PriorityQueueOrderBooks extends OrdersBook {
   private final Queue<Integer> asksOrder = new PriorityQueue<>(1000000);
 
   @Override
-  protected void querySize(StringBuilder output, int price) {
+  protected void querySize(StringBuilder output, Integer price) {
     var size = asks.get(price);
     if (size != null) {
       output.append(size).append(System.lineSeparator());
