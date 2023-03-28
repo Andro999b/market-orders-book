@@ -21,6 +21,12 @@ application {
     mainClass = 'market.test.App'
 }
 
+java {
+     toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 jar {
     manifest {
         attributes(
