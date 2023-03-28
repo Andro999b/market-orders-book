@@ -11,22 +11,24 @@ public abstract class OrdersBook {
 
     try (var input = new BufferedReader(new FileReader(inputFile))) {
       input.lines().forEach((line) -> {
-        var commandArgs = line.split(",");
-        switch (commandArgs[0]) {
-          case "u" -> update(
+        switch (line.charAt(0)) {
+          case 'u' -> {
+            var commandArgs = line.split(",");
+            update(
               Integer.parseInt(commandArgs[1]),
               Integer.parseInt(commandArgs[2]),
               commandArgs[3].charAt(0) == 'b');
-          case "q" -> {
-            if (commandArgs[1].charAt(0) == 'b') {
-              queryBest(output, commandArgs[1].charAt(5) == 'b');
+          }
+          case 'q' -> {
+            if (line.charAt(2) == 'b') {
+              queryBest(output, line.charAt(7) == 'b');
             } else {
-              querySize(output, Integer.parseInt(commandArgs[2]));
+              querySize(output, Integer.parseInt(line.substring(line.lastIndexOf(',') + 1)));
             }
           }
-          case "o" -> makeOrder(
-              commandArgs[1].charAt(0) == 's',
-              Integer.parseInt(commandArgs[2]));
+          case 'o' -> makeOrder(
+              line.charAt(2) == 's',
+              Integer.parseInt(Integer.parseInt(line.substring(line.lastIndexOf(',') + 1))));
         }
       });
     }
@@ -34,11 +36,11 @@ public abstract class OrdersBook {
     Files.writeString(Path.of(outputFile), output.toString());
   }
 
-  protected abstract void querySize(StringBuilder output, int price);
+  protected abstract void querySize(StringBuilder output, Integer price);
 
   protected abstract void queryBest(StringBuilder output, boolean bidsOrAsk);
 
-  protected abstract void makeOrder(boolean bidsOrAsk, int size);
+  protected abstract void makeOrder(boolean bidsOrAsk, Integer size);
 
   protected abstract void update(Integer price, Integer size, Boolean bidsOrAsk);
 

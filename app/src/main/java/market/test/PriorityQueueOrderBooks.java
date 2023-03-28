@@ -41,7 +41,7 @@ public class PriorityQueueOrderBooks extends OrdersBook {
   }
 
   @Override
-  protected void makeOrder(boolean bidsOrAsk, int size) {
+  protected void makeOrder(boolean bidsOrAsk, Integer size) {
     var book = bidsOrAsk ? bids : asks;
     var order = bidsOrAsk ? bidsOrder : asksOrder;
 
