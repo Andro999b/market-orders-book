@@ -96,6 +96,12 @@ public class CustomDataStructureOrderBooks extends OrdersBook {
       var node = nodesByPrice.remove(price);
 
       if (node != null) {
+        if(node == head) {
+          head = node.next;
+          if(head != null) head.prev = null;
+          return;
+        }
+
         if (node.next != null) {
           node.next.prev = node.prev;
         }
@@ -107,6 +113,15 @@ public class CustomDataStructureOrderBooks extends OrdersBook {
     }
 
     PriceAndSize poll() {
+      var node = head;
+      
+      head = node.next;
+      if(head != null) head.prev = null;
+
+      if(node != null) {
+        nodesByPrice.remove(node.price);
+      }
+      
       return head;
     }
   }
@@ -117,6 +132,7 @@ public class CustomDataStructureOrderBooks extends OrdersBook {
   @Override
   protected void querySize(StringBuilder output, int price) {
     var size = asks.get(price);
+    
     if (size != null) {
       output.append(size).append(System.lineSeparator());
       return;
